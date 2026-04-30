@@ -3,15 +3,22 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
-    private int currentHealth;
+    [SerializeField] private float invincibilityDuration = 1.5f;
+    // Cat timp e invincibil playerul dupa ce ia damage
 
-    void Start()
+    private int currentHealth;
+    private bool isInvincible = false;
+
+    private void Start()
     {
         currentHealth = maxHealth;
     }
 
     public void TakeDamage(int amount)
     {
+        // Daca e invincibil, ignoram damage-ul
+        if (isInvincible) return;
+
         currentHealth -= amount;
         Debug.Log("Health: " + currentHealth);
 
@@ -19,11 +26,25 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+        else
+        {
+            // Pornim I-frames
+            StartCoroutine(InvincibilityCoroutine());
+        }
+    }
+
+    private System.Collections.IEnumerator InvincibilityCoroutine()
+    {
+        isInvincible = true;
+        // Asteptam durata I-frame-urilor
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        yield return new WaitForSeconds(invincibilityDuration);
+        gameObject.layer = LayerMask.NameToLayer("Default");
+        isInvincible = false;
     }
 
     private void Die()
     {
         Debug.Log("Player mort!");
-        // Deocamdata doar logam - vom adauga respawn mai tarziu
     }
 }

@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -9,9 +10,12 @@ public class PlayerHealth : MonoBehaviour
     private int currentHealth;
     private bool isInvincible = false;
 
+    private Animator anim;
+
     private void Start()
     {
         currentHealth = maxHealth;
+        anim = GetComponent<Animator>();
     }
 
     public void TakeDamage(int amount)
@@ -21,6 +25,8 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth -= amount;
         Debug.Log("Health: " + currentHealth);
+
+        anim.SetTrigger("Hit");
 
         if (currentHealth <= 0)
         {

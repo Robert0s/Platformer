@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1220761560406149996}
   - component: {fileID: 8644332281144313660}
   - component: {fileID: 7080806547703438725}
+  - component: {fileID: 2741301740656089650}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -139,8 +140,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 7
-  jumpForce: 7
   airControlMultiplier: 0.8
+  jumpForce: 7
+  lowJumpMultiplier: 2.5
+  fallMultiplier: 2
+  coyoteTime: 0.15
+  jumpBufferTime: 0.1
   groundCheckLeft: {fileID: 1938405623791054841}
   groundCheckCenter: {fileID: 762987784138844730}
   groundCheckRight: {fileID: 3366218258680141603}
@@ -252,6 +257,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.22, y: 0.1}
   m_EdgeRadius: 0
+--- !u!114 &2741301740656089650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502371827707713225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb12731d2ad48c4ba5edc1f54c583f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  inventorySize: 4
 --- !u!1 &1007475967594246073
 GameObject:
   m_ObjectHideFlags: 0

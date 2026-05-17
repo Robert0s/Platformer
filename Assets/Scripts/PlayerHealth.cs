@@ -11,6 +11,10 @@ public class PlayerHealth : MonoBehaviour
     private bool isInvincible = false;
 
     private Animator anim;
+    
+    public int CurrentHealth => currentHealth;
+
+    public int MaxHealth => maxHealth;
 
     private void Start()
     {

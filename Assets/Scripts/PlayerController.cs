@@ -38,6 +38,9 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private bool isFacingRight = true;
 
+    private float baseMoveSpeed;
+    public float BaseMoveSpeed => baseMoveSpeed;
+
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        baseMoveSpeed = moveSpeed;
     }
 
     void Update()

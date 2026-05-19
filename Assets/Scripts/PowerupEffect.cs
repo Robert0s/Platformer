@@ -5,6 +5,8 @@ public class PowerupEffect : MonoBehaviour
 {
     private PlayerController playerController;
     private PlayerHealth playerHealth;
+    private Coroutine speedBoostCoroutine;
+    private Coroutine shieldCoroutine;
 
     void Awake()
     {
@@ -15,34 +17,38 @@ public class PowerupEffect : MonoBehaviour
     // SPEED BOOST
     public void ActivateSpeedBoost(float multiplier, float duration)
     {
-        StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
+        if (speedBoostCoroutine != null)
+        {
+            StopCoroutine(speedBoostCoroutine);
+            playerController.MoveSpeed = playerController.BaseMoveSpeed;
+        }
+        speedBoostCoroutine = StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
     }
 
     private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
     {
-        // Salvam viteza originala si o inmultim
-        float originalSpeed = playerController.MoveSpeed;
-        playerController.MoveSpeed *= multiplier;
-
+        playerController.MoveSpeed = playerController.BaseMoveSpeed * multiplier;
         yield return new WaitForSeconds(duration);
-
-        // Revenim la viteza originala
-        playerController.MoveSpeed = originalSpeed;
+        playerController.MoveSpeed = playerController.BaseMoveSpeed;
+        speedBoostCoroutine = null;
     }
 
     // SHIELD
     public void ActivateShield(float duration)
     {
-        StartCoroutine(ShieldCoroutine(duration));
+        if (shieldCoroutine != null)
+        {
+            StopCoroutine(shieldCoroutine);
+            playerHealth.SetInvincible(false);
+        }
+        shieldCoroutine = StartCoroutine(ShieldCoroutine(duration));
     }
 
     private IEnumerator ShieldCoroutine(float duration)
     {
-        // Activam invincibilitatea
         playerHealth.SetInvincible(true);
-
         yield return new WaitForSeconds(duration);
-
         playerHealth.SetInvincible(false);
+        shieldCoroutine = null;
     }
 }

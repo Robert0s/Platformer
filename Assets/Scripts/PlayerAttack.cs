@@ -35,6 +35,17 @@ public class PlayerAttack : MonoBehaviour
 
         // Verificam ca slotul selectat nu e gol si are prefab de proiectil
         if (selectedSlot.IsEmpty()) return;
+        PowerupItem powerup = selectedSlot.item as PowerupItem;
+        if (powerup != null)
+        {
+            // Activam efectul powerup-ului
+            PowerupEffect effect = GetComponent<PowerupEffect>();
+            if (effect != null)
+                powerup.ApplyEffect(effect);
+
+            inventory.UseSelectedItem();
+            return;
+        }
         if (selectedSlot.item.projectilePrefab == null) return;
 
         // Calculam directia in care priveste playerul

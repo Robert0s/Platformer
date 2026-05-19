@@ -38,6 +38,12 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private bool isFacingRight = true;
 
+    public float MoveSpeed
+    {
+        get => moveSpeed;
+        set => moveSpeed = value;
+    }
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

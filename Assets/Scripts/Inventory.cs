@@ -75,6 +75,8 @@ public class Inventory : MonoBehaviour
         var slot = slots[selectedSlot];
         if (slot.IsEmpty()) return false;
 
+        
+
         slot.quantity--;
         if (slot.quantity <= 0)
         {

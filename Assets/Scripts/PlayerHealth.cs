@@ -43,6 +43,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void SetInvincible(bool value)
+    {
+        isInvincible = value;
+        gameObject.layer = value ? LayerMask.NameToLayer("Invincible") : LayerMask.NameToLayer("Default");
+    }
+
     private System.Collections.IEnumerator InvincibilityCoroutine()
     {
         isInvincible = true;

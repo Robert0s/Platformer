@@ -7,8 +7,8 @@ public class PowerupItem : Item
     
     public PowerupType powerupType;
     
-    [SerializeField] private float duration = 5f;
-    [SerializeField] private float speedMultiplier = 2f;
+    [SerializeField] public float duration = 5f;
+    [SerializeField] public float speedMultiplier = 2f;
     // Folosit doar pentru SpeedBoost
 
     public void ApplyEffect(PowerupEffect effect)
@@ -16,10 +16,10 @@ public class PowerupItem : Item
         switch (powerupType)
         {
             case PowerupType.SpeedBoost:
-                effect.ActivateSpeedBoost(speedMultiplier, duration);
+                effect.ActivateSpeedBoost(speedMultiplier, duration, icon);
                 break;
             case PowerupType.Shield:
-                effect.ActivateShield(duration);
+                effect.ActivateShield(duration, icon);
                 break;
         }
     }

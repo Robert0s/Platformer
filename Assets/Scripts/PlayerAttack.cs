@@ -33,37 +33,49 @@ public class PlayerAttack : MonoBehaviour
     {
         var selectedSlot = inventory.GetSelectedSlot();
 
-        // Verificam ca slotul selectat nu e gol si are prefab de proiectil
         if (selectedSlot.IsEmpty()) return;
+
         PowerupItem powerup = selectedSlot.item as PowerupItem;
         if (powerup != null)
         {
-            // Activam efectul powerup-ului
             PowerupEffect effect = GetComponent<PowerupEffect>();
             if (effect != null)
-                powerup.ApplyEffect(effect);
+            {
+                if (powerup.powerupType == PowerupItem.PowerupType.SpeedBoost && effect.IsSpeedBoostActive)
+                {
+                    Debug.Log("Speed boost deja activ!");
+                    return;
+                }
+                if (powerup.powerupType == PowerupItem.PowerupType.Shield && effect.IsShieldActive)
+                {
+                    Debug.Log("Shield deja activ!");
+                    return;
+                }
 
+                // Activam efectul cu icon pentru BuffUI
+                if (powerup.powerupType == PowerupItem.PowerupType.SpeedBoost)
+                    effect.ActivateSpeedBoost(powerup.speedMultiplier, powerup.duration, powerup.icon);
+                else if (powerup.powerupType == PowerupItem.PowerupType.Shield)
+                    effect.ActivateShield(powerup.duration, powerup.icon);
+            }
             inventory.UseSelectedItem();
             return;
         }
+
         if (selectedSlot.item.projectilePrefab == null) return;
 
-        // Calculam directia in care priveste playerul
         Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
 
-        // Instantiem proiectilul la pozitia firePoint
         GameObject projectile = Instantiate(
             selectedSlot.item.projectilePrefab,
             firePoint.position,
             Quaternion.identity
         );
 
-        // Setam viteza proiectilului
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = direction * projectileSpeed;
 
-        // Consumam un item din inventar
         inventory.UseSelectedItem();
     }
 }

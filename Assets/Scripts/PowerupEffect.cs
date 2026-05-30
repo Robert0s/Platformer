@@ -7,15 +7,20 @@ public class PowerupEffect : MonoBehaviour
     private PlayerHealth playerHealth;
     private Coroutine speedBoostCoroutine;
     private Coroutine shieldCoroutine;
+    private BuffUI buffUI;
+
+    public bool IsSpeedBoostActive => speedBoostCoroutine != null;
+    public bool IsShieldActive => shieldCoroutine != null;
 
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
         playerHealth = GetComponent<PlayerHealth>();
+        buffUI = FindFirstObjectByType<BuffUI>();
     }
 
     // SPEED BOOST
-    public void ActivateSpeedBoost(float multiplier, float duration)
+    public void ActivateSpeedBoost(float multiplier, float duration, Sprite icon)
     {
         if (speedBoostCoroutine != null)
         {
@@ -23,6 +28,7 @@ public class PowerupEffect : MonoBehaviour
             playerController.MoveSpeed = playerController.BaseMoveSpeed;
         }
         speedBoostCoroutine = StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
+        buffUI?.ShowBuff("SpeedBoost", icon, duration);
     }
 
     private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
@@ -34,7 +40,7 @@ public class PowerupEffect : MonoBehaviour
     }
 
     // SHIELD
-    public void ActivateShield(float duration)
+    public void ActivateShield(float duration, Sprite icon)
     {
         if (shieldCoroutine != null)
         {
@@ -42,6 +48,7 @@ public class PowerupEffect : MonoBehaviour
             playerHealth.SetInvincible(false);
         }
         shieldCoroutine = StartCoroutine(ShieldCoroutine(duration));
+        buffUI?.ShowBuff("Shield", icon, duration);
     }
 
     private IEnumerator ShieldCoroutine(float duration)

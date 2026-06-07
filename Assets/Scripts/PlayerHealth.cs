@@ -1,15 +1,18 @@
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private float invincibilityDuration = 1.5f;
     // Cat timp e invincibil playerul dupa ce ia damage
+    [SerializeField] private float respawnDelay = 2f;
 
     private int currentHealth;
     private bool isInvincible = false;
-
+    private bool isDead = false;
     private Animator anim;
     
     public int CurrentHealth => currentHealth;
@@ -25,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         // Daca e invincibil, ignoram damage-ul
-        if (isInvincible) return;
+        if (isInvincible || isDead) return;
 
         currentHealth -= amount;
         Debug.Log("Health: " + currentHealth);
@@ -61,6 +64,21 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player mort!");
+        isDead = true;
+        anim?.SetTrigger("Die");
+
+        GetComponent<PlayerController>().enabled = false;
+        GetComponent<PlayerAttack>().enabled = false;
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+
+        StartCoroutine(RespawnCoroutine());
+    }
+
+    private IEnumerator RespawnCoroutine()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+
+        // Reincarcam scena curenta = respawn
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

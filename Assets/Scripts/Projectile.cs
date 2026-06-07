@@ -7,6 +7,9 @@ public class Projectile : MonoBehaviour
     // Dupa cat timp se distruge daca nu loveste nimic
 
     [SerializeField] private float rotationSpeed = 720f;
+
+    [SerializeField] private bool isBossProjectile = false;
+
     // Cat de repede se roteste shuriken-ul in zbor
 
     void Start()
@@ -23,20 +26,43 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Ignoram coliziunea cu playerul
-        if (other.CompareTag("Player")) return;
-
-        // Daca lovim un inamic, ii dam damage
-        EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-        if (enemyHealth != null)
+        if (isBossProjectile)
         {
-            enemyHealth.TakeDamage(damage, null);
-            Destroy(gameObject);
-            return;
+            // Proiectilul boss-ului loveste playerul
+            if (other.CompareTag("Player"))
+            {
+                other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+            else if (!other.isTrigger)
+            {
+                Destroy(gameObject);
+            }
         }
+        else
+        {
+            // Proiectilul playerului loveste inamicii
+            if (other.CompareTag("Player")) return;
 
-        // Daca lovim orice altceva (ex. ground), distrugem proiectilul
-        if (!other.isTrigger)
-            Destroy(gameObject);
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            BossHealth bossHealth = other.GetComponent<BossHealth>();
+
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage, null);
+                Destroy(gameObject);
+                return;
+            }
+
+            if (bossHealth != null)
+            {
+                bossHealth.TakeDamage(damage);
+                Destroy(gameObject);
+                return;
+            }
+
+            if (!other.isTrigger)
+                Destroy(gameObject);
+        }
     }
 }

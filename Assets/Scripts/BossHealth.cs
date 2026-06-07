@@ -7,19 +7,33 @@ public class BossHealth : MonoBehaviour
     private int currentHealth;
 
     [SerializeField] private Slider healthBar;
-    // Slider UI pentru boss health bar
+    [SerializeField] private float showRange = 15f;
+    
     private Animator anim;
+    private Transform player;
+
+    private bool isDead = false;
 
     void Start()
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
         if (healthBar != null)
         {
             healthBar.maxValue = maxHealth;
             healthBar.value = maxHealth;
+            healthBar.gameObject.SetActive(false);
         }
+    }
+
+    void Update()
+    {
+        if ( isDead || player == null || healthBar == null) return;
+
+        float distance = Vector2.Distance(transform.position, player.position);
+        healthBar.gameObject.SetActive(distance <= showRange);
     }
 
     public void TakeDamage(int amount)
@@ -37,9 +51,15 @@ public class BossHealth : MonoBehaviour
 
     private void Die()
     {
+        isDead = true;
         anim?.SetTrigger("Die");
         GetComponent<BossAI>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+
+        // Ascundem health bar-ul cand moare boss-ul
+        if (healthBar != null)
+            healthBar.gameObject.SetActive(false);
+
         Destroy(gameObject, 1f);
     }
 }

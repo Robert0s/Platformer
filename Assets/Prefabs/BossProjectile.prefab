@@ -155,8 +155,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.3095238, y: 3.041794}
-  m_Radius: 0.87512755
+  m_Offset: {x: 1.3441043, y: 2.9944603}
+  m_Radius: 0.86562896
 --- !u!114 &6362236642325054652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,5 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 1
   lifetime: 3
-  rotationSpeed: 720
+  rotationSpeed: 0
   isBossProjectile: 1
+  homing: 1
+  homingTurnSpeed: 120
+  homingDuration: 0.6
+  maxHomingAngle: 180

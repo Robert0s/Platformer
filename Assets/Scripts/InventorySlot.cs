@@ -12,7 +12,7 @@ public class InventorySlot
         this.quantity = quantity;
     }
 
-    // Adaugam o bucata in slot
+    
     public void AddQuantity(int amount)
     {
         quantity += amount;

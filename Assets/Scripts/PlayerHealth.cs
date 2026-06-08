@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private float invincibilityDuration = 1.5f;
-    // Cat timp e invincibil playerul dupa ce ia damage
+    
     [SerializeField] private float respawnDelay = 2f;
 
     private int currentHealth;
@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        // Daca e invincibil, ignoram damage-ul
+        
         if (isInvincible || isDead) return;
 
         currentHealth -= amount;
@@ -41,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            // Pornim I-frames
+            
             StartCoroutine(InvincibilityCoroutine());
         }
     }
@@ -55,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
     private System.Collections.IEnumerator InvincibilityCoroutine()
     {
         isInvincible = true;
-        // Asteptam durata I-frame-urilor
+        
         gameObject.layer = LayerMask.NameToLayer("Invincible");
         yield return new WaitForSeconds(invincibilityDuration);
         gameObject.layer = LayerMask.NameToLayer("Default");
@@ -78,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnDelay);
 
-        // Reincarcam scena curenta = respawn
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

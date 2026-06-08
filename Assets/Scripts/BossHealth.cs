@@ -56,7 +56,7 @@ public class BossHealth : MonoBehaviour
         GetComponent<BossAI>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
 
-        // Ascundem health bar-ul cand moare boss-ul
+        
         if (healthBar != null)
             healthBar.gameObject.SetActive(false);
 

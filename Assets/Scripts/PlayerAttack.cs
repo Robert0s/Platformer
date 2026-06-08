@@ -3,10 +3,10 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float projectileSpeed = 10f;
-    // Viteza cu care zboara proiectilul
+    
 
     [SerializeField] private Transform firePoint;
-    // Punctul din care e aruncat proiectilul (child gol pe player)
+    
 
     private Inventory inventory;
     private bool isFacingRight = true;
@@ -18,11 +18,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        // Sincronizam directia cu PlayerController
-        // Verificam scala pe X ca sa stim spre ce parte priveste
+        
         isFacingRight = transform.localScale.x > 0;
 
-        // Atacam cu click stanga sau tasta E
+        
         if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
             Attack();
@@ -52,7 +51,7 @@ public class PlayerAttack : MonoBehaviour
                     return;
                 }
 
-                // Activam efectul cu icon pentru BuffUI
+                
                 if (powerup.powerupType == PowerupItem.PowerupType.SpeedBoost)
                     effect.ActivateSpeedBoost(powerup.speedMultiplier, powerup.duration, powerup.icon);
                 else if (powerup.powerupType == PowerupItem.PowerupType.Shield)

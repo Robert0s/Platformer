@@ -15,7 +15,7 @@ public class ItemPickup : MonoBehaviour
         Inventory inventory = other.GetComponent<Inventory>();
         if (inventory != null && inventory.AddItem(item, quantity))
         {
-            // Itemul a fost adaugat cu succes → distrugem pickup-ul
+            
             collected = true;
             Destroy(gameObject);
         }

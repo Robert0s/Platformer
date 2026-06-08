@@ -4,22 +4,22 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private int damage = 1;
     [SerializeField] private float lifetime = 3f;
-    // Dupa cat timp se distruge daca nu loveste nimic
+    
 
     [SerializeField] private float rotationSpeed = 720f;
 
     [SerializeField] private bool isBossProjectile = false;
 
-    // Cat de repede se roteste shuriken-ul in zbor
+    
 
     [Header("Homing")]
-    [Tooltip("Daca e activat, proiectilul isi corecteaza usor directia spre player pentru un timp limitat dupa lansare.")]
+    [Tooltip("Homing incet spre player +- momentan sare in sus.")]
     [SerializeField] private bool homing = false;
-    [Tooltip("Cat de repede se roteste directia spre player (grade pe secunda). Valoare mica = corectie usoara, nu un missile perfect.")]
+    [Tooltip("cat de repede merge spre player in grade pe secunda.")]
     [SerializeField] private float homingTurnSpeed = 120f;
-    [Tooltip("Cat timp dupa lansare mai corecteaza proiectilul directia inainte sa zboare drept.")]
+    [Tooltip("cat timp corecteaza proiectilul.")]
     [SerializeField] private float homingDuration = 0.6f;
-    [Tooltip("Cat de mult se poate abate tinta de homing fata de directia initiala de lansare (grade). Limiteaza abaterea ca proiectilul sa nu 'ocoleasca' tinta cand aceasta se misca brusc (ex. player sare exact cand e lansat).")]
+    [Tooltip("am incercat ceva tine minte sa actualizezi functia.")]
     [SerializeField] private float maxHomingAngle = 45f;
 
     private Rigidbody2D rb;
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        // Distrugem proiectilul dupa lifetime secunde
+        
         Destroy(gameObject, lifetime);
 
         if (homing)
@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        // Rotim shuriken-ul pentru efect vizual
+        
         transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
 
         if (homing && rb != null && homingTarget != null && homingTimer > 0f)
@@ -56,8 +56,7 @@ public class Projectile : MonoBehaviour
             Vector2 currentVelocity = rb.linearVelocity;
             Vector2 desiredDirection = (homingTarget.position - transform.position).normalized;
 
-            // Limitam cat de mult se poate abate tinta fata de directia initiala, ca proiectilul
-            // sa nu se "intoarca" si sa ocoleasca playerul cand acesta sare brusc chiar la spawn
+            //trebuie sa lucrez la ecuatia asta
             desiredDirection = Vector3.RotateTowards(initialDirection, desiredDirection,
                 maxHomingAngle * Mathf.Deg2Rad, 0f);
 
@@ -72,7 +71,7 @@ public class Projectile : MonoBehaviour
     {
         if (isBossProjectile)
         {
-            // Proiectilul boss-ului loveste playerul
+            
             if (other.CompareTag("Player"))
             {
                 other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
@@ -85,7 +84,7 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            // Proiectilul playerului loveste inamicii
+            
             if (other.CompareTag("Player")) return;
 
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();

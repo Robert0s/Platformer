@@ -19,7 +19,7 @@ public class PowerupEffect : MonoBehaviour
         buffUI = FindFirstObjectByType<BuffUI>();
     }
 
-    // SPEED BOOST
+    
     public void ActivateSpeedBoost(float multiplier, float duration, Sprite icon)
     {
         if (speedBoostCoroutine != null)
@@ -39,7 +39,7 @@ public class PowerupEffect : MonoBehaviour
         speedBoostCoroutine = null;
     }
 
-    // SHIELD
+    
     public void ActivateShield(float duration, Sprite icon)
     {
         if (shieldCoroutine != null)

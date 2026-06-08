@@ -9,7 +9,7 @@ public class PowerupItem : Item
     
     [SerializeField] public float duration = 5f;
     [SerializeField] public float speedMultiplier = 2f;
-    // Folosit doar pentru SpeedBoost
+    
 
     public void ApplyEffect(PowerupEffect effect)
     {

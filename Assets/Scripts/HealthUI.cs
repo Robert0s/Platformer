@@ -13,7 +13,7 @@ public class HealthUI : MonoBehaviour
 
     void Start()
     {
-        // Luam componenta de animatie de pe fiecare inima
+       
         heartAnimations = new HeartAnimation[hearts.Length];
         for (int i = 0; i < hearts.Length; i++)
         {
@@ -25,10 +25,10 @@ public class HealthUI : MonoBehaviour
 
     void Update()
     {
-        // Daca viata s-a schimbat, animam inima corespunzatoare
+        
         if (playerHealth.CurrentHealth < previousHealth)
         {
-            // Inima care tocmai a fost pierduta face punch
+            
             int lostHeartIndex = playerHealth.CurrentHealth;
             if (lostHeartIndex < heartAnimations.Length && heartAnimations[lostHeartIndex] != null)
             {
@@ -38,7 +38,7 @@ public class HealthUI : MonoBehaviour
 
         previousHealth = playerHealth.CurrentHealth;
 
-        // Actualizam sprite-urile
+        
         for (int i = 0; i < hearts.Length; i++)
         {
             hearts[i].sprite = i < playerHealth.CurrentHealth ? fullHeart : emptyHeart;

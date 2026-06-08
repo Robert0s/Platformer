@@ -29,6 +29,7 @@ public class PowerupEffect : MonoBehaviour
         }
         speedBoostCoroutine = StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
         buffUI?.ShowBuff("SpeedBoost", icon, duration);
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance.speedUpSFX);
     }
 
     private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
@@ -49,6 +50,7 @@ public class PowerupEffect : MonoBehaviour
         }
         shieldCoroutine = StartCoroutine(ShieldCoroutine(duration));
         buffUI?.ShowBuff("Shield", icon, duration);
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance.shieldSFX);
     }
 
     private IEnumerator ShieldCoroutine(float duration)

@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private float baseMoveSpeed;
     public float BaseMoveSpeed => baseMoveSpeed;
 
+    private bool wasGrounded;
+
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -73,6 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpBufferCounter = 0f; 
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance.jumpSFX);
         }
 
         
@@ -98,6 +101,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheckLeft.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle(groundCheckCenter.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle(groundCheckRight.position, groundCheckRadius, groundLayer);
+
+        if (!wasGrounded && isGrounded)
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance.landSFX);
+        wasGrounded = isGrounded;
+
         float currentSpeed = isGrounded ? moveSpeed : moveSpeed * airControlMultiplier;
         rb.linearVelocity = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
         

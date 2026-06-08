@@ -34,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Health: " + currentHealth);
 
         anim.SetTrigger("Hit");
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance.hitSFX);
 
         if (currentHealth <= 0)
         {

@@ -75,6 +75,7 @@ public class PlayerAttack : MonoBehaviour
         if (rb != null)
             rb.linearVelocity = direction * projectileSpeed;
 
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance.attackSFX);
         inventory.UseSelectedItem();
     }
 }

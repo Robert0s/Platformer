@@ -18,6 +18,7 @@ public class ItemPickup : MonoBehaviour
             
             collected = true;
             Destroy(gameObject);
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance.equipSFX);
         }
     }
 }

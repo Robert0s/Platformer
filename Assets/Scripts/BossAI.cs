@@ -17,7 +17,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float attackCooldown = 2f;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
-    [Tooltip("Timpul (secunde) dintre pornirea animatiei de shoot si momentul in care mana e intinsa spre FirePoint.")]
+    [Tooltip("Timpul dintre animatia de tras si momentu cand bossu isi ridica mana.")]
     [SerializeField] private float shootDelay = 0.4f;
 
     [Header("Search")]
@@ -107,7 +107,7 @@ public class BossAI : MonoBehaviour
         if (!IsBlocked(Vector2.down, out _))
             return Vector2.down;
 
-        //nu are unde sa mearga sta pe loc
+        
         return Vector2.zero;
     }
 
